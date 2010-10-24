@@ -16,15 +16,15 @@
 require 'gtk2'
 
 window = Gtk::Window.new
-window.set_default_size(500,500)
+window.set_default_size(200,200)
 window.set_title("RubyChat")
 window.show
 box = Gtk::VBox.new(false, 0)
 scroll = Gtk::ScrolledWindow.new
-buffer = Gtk::TextBuffer.new
-view = Gtk::TextView.new(buffer)
+$buffer = Gtk::TextBuffer.new
+view = Gtk::TextView.new($buffer)
 hbox = Gtk::HBox.new(false, 0)
-message = Gtk::Entry.new
+$message = Gtk::Entry.new
 button = Gtk::Button.new('Send')
 
 window.signal_connect('delete_event') do
@@ -32,17 +32,27 @@ window.signal_connect('delete_event') do
   false
 end
 
+def newmessage(buffer, message)
+  $buffer.set_text(buffer + 'You: ' + message + "\n")
+  $message.set_text('')
+end
+
 button.signal_connect( "clicked" ) do
-  oldtext = buffer.text
-  newtext = message.text
-  buffer.set_text(oldtext + 'You: ' + newtext + "\n")
+  newmessage($buffer.text, $message.text)
+end
+
+$message.signal_connect( "activate" ) do
+  newmessage($buffer.text, $message.text)
 end
 
 window.add(box)
+window.set_resizable(true)
 view.set_editable(false)
-hbox.pack_start(message, true, true, 0)
+view.wrap_mode = Gtk::TextTag::WRAP_WORD_CHAR
+hbox.pack_start($message, true, true, 0)
 hbox.pack_start(button, false, false, 0)
 scroll.add(view)
+scroll.set_policy(1,1)
 box.pack_start(scroll, true, true, 0)
 box.pack_start(hbox, false, false, 0)
 window.show_all

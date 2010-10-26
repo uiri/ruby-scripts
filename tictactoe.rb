@@ -5,7 +5,7 @@ $window.set_default_size(300, 300)
 $table = Gtk::Table.new(3, 3, true)
 $window.add($table)
 
-def create(x, y, z)
+def create(x, y, z, a)
   z = Gtk::Button.new("X or O", false)
   $table.attach_defaults(z, y - 1, y, x - 1, x)
   z.signal_connect( "clicked" ) do
@@ -19,9 +19,11 @@ def create(x, y, z)
     $ok.signal_connect( "clicked" ) do
       if $entry.text == 'x'
         z.set_label("x")
+        a = 'x'
         $dialog.destroy
       elsif $entry.text == 'o'
         z.set_label("o")
+        a = 'o'
         $dialog.destroy
       else
         $error = Gtk::Window.new
@@ -46,15 +48,15 @@ $window.signal_connect("delete_event") do
     false
 end
 
-create(1, 1, $button1)
-create(1, 2, $button2)
-create(1, 3, $button3)
-create(2, 1, $button4)
-create(2, 2, $button5)
-create(2, 3, $button6)
-create(3, 1, $button7)
-create(3, 2, $button8)
-create(3, 3, $button9)
+create(1, 1, $button1, $first)
+create(1, 2, $button2, $second)
+create(1, 3, $button3, $third)
+create(2, 1, $button4, $fourth)
+create(2, 2, $button5, $fifth)
+create(2, 3, $button6, $sixth)
+create(3, 1, $button7, $seventh)
+create(3, 2, $button8, $eighth)
+create(3, 3, $button9, $ninth)
 
 def wins(x)
   $win = Gtk::Window.new
@@ -85,6 +87,88 @@ def wins(x)
     $win.destroy
     $window.destroy
   end
+end
+
+if $first == 'x'
+  if $second == $third
+    if $first == $second
+      wins("x")
+    end
+  elsif $fourth == $seventh
+    if $first == $fourth
+      wins("x")
+    end
+  elsif $fifth == $ninth
+    if $first == $fifth
+      wins("x")
+    end
+  else
+  end
+elsif $first == 'o'
+   if $second == $third
+    if $first == $second
+      wins("o")
+    end
+  elsif $fourth == $seventh
+    if $first == $fourth
+      wins("o")
+    end
+  elsif $fifth == $ninth
+    if $first == $fifth
+      wins("o")
+    end
+  else
+  end 
+elsif $third == 'o'
+  if $sixth == $ninth
+    if $third == $sixth
+      wins("o")
+    end
+  elsif $fifth == $seventh
+    if $third == $fifth
+      wins("o")
+    end
+  else
+  end
+elsif $third == 'x'
+  if $sixth == $ninth
+    if $third == $sixth
+      wins("x")
+    end
+  elsif $fifth == $seventh
+    if $third == $fifth
+      wins("x")
+    end
+  else
+  end
+elsif $second == $fifth
+  if $fifth == $eighth
+    if $second == 'x'
+      wins("x")
+    elsif $second == 'o'
+      wins("o")
+    else
+    end
+  end
+elsif $fourth == $fifth
+  if $fifth == $sixth
+    if $fourth == 'x'
+      wins("x")
+    elsif $fourth == 'o'
+      wins("o")
+    else
+    end
+  end
+elsif $seventh == $eighth
+  if $eighth == $ninth
+    if $seventh == 'x'
+      wins("x")
+    elsif $seventh == 'o'
+      wins("o")
+    else
+    end
+  end
+else
 end
 
 $window.show_all

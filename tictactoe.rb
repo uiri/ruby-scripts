@@ -20,10 +20,16 @@ def create(x, y, z, a)
       if $entry.text == 'x'
         z.set_label("x")
         a = 'x'
+        if $second == $third and $first == a or $first == $third and $second == a or $first == $second and $third == a or $fourth == $seventh and $first == a or $fourth == $first and $seventh == a or $seventh == $first and $fourth == a  or $fifth == $ninth and $first == a or $fifth == $first and $ninth == a or $first == $ninth and $fifth == a or $sixth == $ninth and $third == a or $sixth == $third and $ninth == a or $third == $ninth and $sixth == a or $fifth == $seventh and $third == a or $fifth == $third and $seventh == a or $seventh == $third and $fifth == a or $second == $fifth and $eighth == a or $second == $eighth and $fifth == a or $eighth == $fifth and $second == a or $fourth == $fifth and $sixth == a or $fifth == $sixth and $fourth == a or $fourth == $sixth and $fifth == a or $seventh == $eighth and $ninth == a or $seventh == $ninth and $eighth == a or $eighth == $ninth and $seventh == a
+          wins("x")
+        end
         $dialog.destroy
       elsif $entry.text == 'o'
         z.set_label("o")
         a = 'o'
+        if $second == $third and $first == a or $first == $third and $second == a or $first == $second and $third == a or $fourth == $seventh and $first == a or $fourth == $first and $seventh == a or $seventh == $first and $fourth == a  or $fifth == $ninth and $first == a or $fifth == $first and $ninth == a or $first == $ninth and $fifth == a or $sixth == $ninth and $third == a or $sixth == $third and $ninth == a or $third == $ninth and $sixth == a or $fifth == $seventh and $third == a or $fifth == $third and $seventh == a or $seventh == $third and $fifth == a or $second == $fifth and $eighth == a or $second == $eighth and $fifth == a or $eighth == $fifth and $second == a or $fourth == $fifth and $sixth == a or $fifth == $sixth and $fourth == a or $fourth == $sixth and $fifth == a or $seventh == $eighth and $ninth == a or $seventh == $ninth and $eighth == a or $eighth == $ninth and $seventh == a
+          wins("o")
+        end
         $dialog.destroy
       else
         $error = Gtk::Window.new
@@ -44,6 +50,10 @@ def create(x, y, z, a)
 end
 
 $window.signal_connect("delete_event") do
+  $window.destroy
+end
+
+$window.signal_connect("destroy") do
     Gtk.main_quit
     false
 end
@@ -87,88 +97,8 @@ def wins(x)
     $win.destroy
     $window.destroy
   end
-end
-
-if $first == 'x'
-  if $second == $third
-    if $first == $second
-      wins("x")
-    end
-  elsif $fourth == $seventh
-    if $first == $fourth
-      wins("x")
-    end
-  elsif $fifth == $ninth
-    if $first == $fifth
-      wins("x")
-    end
-  else
-  end
-elsif $first == 'o'
-   if $second == $third
-    if $first == $second
-      wins("o")
-    end
-  elsif $fourth == $seventh
-    if $first == $fourth
-      wins("o")
-    end
-  elsif $fifth == $ninth
-    if $first == $fifth
-      wins("o")
-    end
-  else
-  end 
-elsif $third == 'o'
-  if $sixth == $ninth
-    if $third == $sixth
-      wins("o")
-    end
-  elsif $fifth == $seventh
-    if $third == $fifth
-      wins("o")
-    end
-  else
-  end
-elsif $third == 'x'
-  if $sixth == $ninth
-    if $third == $sixth
-      wins("x")
-    end
-  elsif $fifth == $seventh
-    if $third == $fifth
-      wins("x")
-    end
-  else
-  end
-elsif $second == $fifth
-  if $fifth == $eighth
-    if $second == 'x'
-      wins("x")
-    elsif $second == 'o'
-      wins("o")
-    else
-    end
-  end
-elsif $fourth == $fifth
-  if $fifth == $sixth
-    if $fourth == 'x'
-      wins("x")
-    elsif $fourth == 'o'
-      wins("o")
-    else
-    end
-  end
-elsif $seventh == $eighth
-  if $eighth == $ninth
-    if $seventh == 'x'
-      wins("x")
-    elsif $seventh == 'o'
-      wins("o")
-    else
-    end
-  end
-else
+  $win.add($winbox)
+  $win.show_all
 end
 
 $window.show_all

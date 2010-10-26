@@ -4,6 +4,15 @@ $window = Gtk::Window.new
 $window.set_default_size(300, 300)
 $table = Gtk::Table.new(3, 3, true)
 $window.add($table)
+$first = 'a'
+$second = 'b'
+$third = 'c'
+$fourth = 'd'
+$fifth = 'e'
+$sixth = 'f'
+$seventh = 'g'
+$eighth = 'h'
+$ninth = 'i'
 
 def create(x, y, z, a)
   z = Gtk::Button.new("X or O", false)
@@ -20,15 +29,19 @@ def create(x, y, z, a)
       if $entry.text == 'x'
         z.set_label("x")
         a = 'x'
-        if $second == $third and $first == a or $first == $third and $second == a or $first == $second and $third == a or $fourth == $seventh and $first == a or $fourth == $first and $seventh == a or $seventh == $first and $fourth == a  or $fifth == $ninth and $first == a or $fifth == $first and $ninth == a or $first == $ninth and $fifth == a or $sixth == $ninth and $third == a or $sixth == $third and $ninth == a or $third == $ninth and $sixth == a or $fifth == $seventh and $third == a or $fifth == $third and $seventh == a or $seventh == $third and $fifth == a or $second == $fifth and $eighth == a or $second == $eighth and $fifth == a or $eighth == $fifth and $second == a or $fourth == $fifth and $sixth == a or $fifth == $sixth and $fourth == a or $fourth == $sixth and $fifth == a or $seventh == $eighth and $ninth == a or $seventh == $ninth and $eighth == a or $eighth == $ninth and $seventh == a
+        if $second == $third and $first == $second or $first == $third and $second == $third or $first == $second and $third == $first or $fourth == $seventh and $first == $fourth or $fourth == $first and $seventh == $fourth or $seventh == $first and $fourth == $first  or $fifth == $ninth and $first == $ninth or $fifth == $first and $ninth == $first or $first == $ninth and $fifth == $ninth or $sixth == $ninth and $third == $sixth or $sixth == $third and $ninth == $third or $third == $ninth and $sixth == $ninth or $fifth == $seventh and $third == $fifth or $fifth == $third and $seventh == $third or $seventh == $third and $fifth == $third or $second == $fifth and $eighth == $fifth or $second == $eighth and $fifth == $second or $eighth == $fifth and $second == $fifth or $fourth == $fifth and $sixth == $fifth or $fifth == $sixth and $fourth == $sixth or $fourth == $sixth and $fifth == $sixth or $seventh == $eighth and $ninth == $seventh or $seventh == $ninth and $eighth == $ninth or $eighth == $ninth and $seventh == $ninth
           wins("x")
+        else
+          puts 'GODDAMNIT!'
         end
         $dialog.destroy
       elsif $entry.text == 'o'
         z.set_label("o")
         a = 'o'
-        if $second == $third and $first == a or $first == $third and $second == a or $first == $second and $third == a or $fourth == $seventh and $first == a or $fourth == $first and $seventh == a or $seventh == $first and $fourth == a  or $fifth == $ninth and $first == a or $fifth == $first and $ninth == a or $first == $ninth and $fifth == a or $sixth == $ninth and $third == a or $sixth == $third and $ninth == a or $third == $ninth and $sixth == a or $fifth == $seventh and $third == a or $fifth == $third and $seventh == a or $seventh == $third and $fifth == a or $second == $fifth and $eighth == a or $second == $eighth and $fifth == a or $eighth == $fifth and $second == a or $fourth == $fifth and $sixth == a or $fifth == $sixth and $fourth == a or $fourth == $sixth and $fifth == a or $seventh == $eighth and $ninth == a or $seventh == $ninth and $eighth == a or $eighth == $ninth and $seventh == a
+        if $second == $third and $first == $second or $first == $third and $second == $third or $first == $second and $third == $first or $fourth == $seventh and $first == $fourth or $fourth == $first and $seventh == $fourth or $seventh == $first and $fourth == $first  or $fifth == $ninth and $first == $ninth or $fifth == $first and $ninth == $first or $first == $ninth and $fifth == $ninth or $sixth == $ninth and $third == $sixth or $sixth == $third and $ninth == $third or $third == $ninth and $sixth == $ninth or $fifth == $seventh and $third == $fifth or $fifth == $third and $seventh == $third or $seventh == $third and $fifth == $third or $second == $fifth and $eighth == $fifth or $second == $eighth and $fifth == $second or $eighth == $fifth and $second == $fifth or $fourth == $fifth and $sixth == $fifth or $fifth == $sixth and $fourth == $sixth or $fourth == $sixth and $fifth == $sixth or $seventh == $eighth and $ninth == $seventh or $seventh == $ninth and $eighth == $ninth or $eighth == $ninth and $seventh == $ninth
           wins("o")
+        else
+          puts 'GODDAMNIT!'
         end
         $dialog.destroy
       else
@@ -51,11 +64,8 @@ end
 
 $window.signal_connect("delete_event") do
   $window.destroy
-end
-
-$window.signal_connect("destroy") do
-    Gtk.main_quit
-    false
+  Gtk.main_quit
+  false
 end
 
 create(1, 1, $button1, $first)
@@ -82,20 +92,22 @@ def wins(x)
 
   $yes.signal_connect( "clicked" ) do
     $win.destroy
-    $button1.set_label('X or O')
-    $button2.set_label('X or O')
-    $button3.set_label('X or O')
-    $button4.set_label('X or O')
-    $button5.set_label('X or O')
-    $button6.set_label('X or O')
-    $button7.set_label('X or O')
-    $button8.set_label('X or O')
-    $button9.set_label('X or O')
+    $button1 =  Gtk::Button.new("X or O", false)
+    $button2 =  Gtk::Button.new("X or O", false)
+    $button3 =  Gtk::Button.new("X or O", false)
+    $button4 =  Gtk::Button.new("X or O", false)
+    $button5 =  Gtk::Button.new("X or O", false)
+    $button6 =  Gtk::Button.new("X or O", false)
+    $button7 =  Gtk::Button.new("X or O", false)
+    $button8 =  Gtk::Button.new("X or O", false)
+    $button9 =  Gtk::Button.new("X or O", false)
   end
 
   $no.signal_connect( "clicked" ) do
     $win.destroy
     $window.destroy
+    Gtk.main_quit
+    false
   end
   $win.add($winbox)
   $win.show_all

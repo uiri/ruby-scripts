@@ -5,8 +5,8 @@ $window.set_default_size(300, 300)
 $table = Gtk::Table.new(3, 3, true)
 $window.add($table)
 
-def create(x, y, z, a)
-  z = Gtk::Button.new('X or O')
+def create(x, y, z)
+  z = Gtk::Button.new("X or O", false)
   $table.attach_defaults(z, y - 1, y, x - 1, x)
   z.signal_connect( "clicked" ) do
     $dialog = Gtk::Window.new
@@ -18,14 +18,10 @@ def create(x, y, z, a)
     $dialog.add($vbox)
     $ok.signal_connect( "clicked" ) do
       if $entry.text == 'x'
-        a = Gtk::Label.new("X")
-        z.destroy
-        $table.attach_defaults(a, y - 1, y, x - 1, x)
+        z.set_label("x")
         $dialog.destroy
       elsif $entry.text == 'o'
-        a = Gtk::Label.new("O")
-        z.destroy
-        $table.attach_defaults(a, y - 1, y, x - 1, x)
+        z.set_label("o")
         $dialog.destroy
       else
         $error = Gtk::Window.new
@@ -50,15 +46,46 @@ $window.signal_connect("delete_event") do
     false
 end
 
-create(1, 1, $button1, $image1)
-create(1, 2, $button2, $image2)
-create(1, 3, $button3, $image3)
-create(2, 1, $button4, $image4)
-create(2, 2, $button5, $image5)
-create(2, 3, $button6, $image6)
-create(3, 1, $button7, $image7)
-create(3, 2, $button8, $image8)
-create(3, 3, $button9, $image9)
+create(1, 1, $button1)
+create(1, 2, $button2)
+create(1, 3, $button3)
+create(2, 1, $button4)
+create(2, 2, $button5)
+create(2, 3, $button6)
+create(3, 1, $button7)
+create(3, 2, $button8)
+create(3, 3, $button9)
+
+def wins(x)
+  $win = Gtk::Window.new
+  $winbox = Gtk::VBox.new
+  $playagain = Gtk::Label.new(x + " has won. Do you want to play again?")
+  $yes = Gtk::Button.new("yes")
+  $no = Gtk::Button.new("no")
+  $buttonbox = Gtk::HBox.new
+  $buttonbox.pack_start($yes, false, false, 0)
+  $buttonbox.pack_start($no, false, false, 0)
+  $winbox.pack_start($playagain, false, false, 0)
+  $winbox.pack_start($buttonbox, false, false, 0)
+
+  $yes.signal_connect( "clicked" ) do
+    $win.destroy
+    $button1.set_label('X or O')
+    $button2.set_label('X or O')
+    $button3.set_label('X or O')
+    $button4.set_label('X or O')
+    $button5.set_label('X or O')
+    $button6.set_label('X or O')
+    $button7.set_label('X or O')
+    $button8.set_label('X or O')
+    $button9.set_label('X or O')
+  end
+
+  $no.signal_connect( "clicked" ) do
+    $win.destroy
+    $window.destroy
+  end
+end
 
 $window.show_all
 

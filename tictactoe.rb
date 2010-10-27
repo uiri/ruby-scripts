@@ -16,10 +16,10 @@
 
 require 'gtk2'
 
-window = Gtk::Window.new
-window.set_default_size(300, 300)
+$window = Gtk::Window.new
+$window.set_default_size(300, 300)
 table = Gtk::Table.new(3, 3, true)
-window.add(table)
+$window.add(table)
 
 $button1 = Gtk::Button.new("X or O", false)
 $button2 = Gtk::Button.new("X or O", false)
@@ -343,8 +343,8 @@ $button9.signal_connect( "clicked" ) do
   dialog.show_all
 end
 
-window.signal_connect("delete_event") do
-  window.destroy
+$window.signal_connect("delete_event") do
+  $window.destroy
   Gtk.main_quit
   false
 end
@@ -376,7 +376,7 @@ def wins(x)
 
   no.signal_connect( "clicked" ) do
     win.destroy
-    window.destroy
+    $window.destroy
     Gtk.main_quit
     false
   end
@@ -384,6 +384,6 @@ def wins(x)
   win.show_all
 end
 
-window.show_all
+$window.show_all
 
 Gtk.main

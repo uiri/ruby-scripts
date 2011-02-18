@@ -13,30 +13,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # You may contact Uiri Noyb via electronic mail with the address uiri@compucrunch.com
-
-puts 'Add or subtract?'
-a = gets.chomp
+def choose
+    puts 'Add or subtract?'
+    a = gets.chomp
+end
+def twonumbers
+    puts 'Enter the first number:'
+    b = gets.chomp
+    puts 'Enter the second number:'
+    c = gets.chomp
+end
 while a != 'end'
   if a == 'add'
-    puts 'Enter the first number:'
-    b = gets.chomp
-    puts 'Enter the second number:'
-    c = gets.chomp
+    twonumbers
     d = b.to_i(2)+c.to_i(2)
     puts b + ' + ' + c + ' = ' + d.to_s(2) + '(' + d.to_i.to_s + ')'
-    puts 'Add or subtract?'
-    a = gets.chomp
+    choose
   elsif a == 'subtract'
-    puts 'Enter the first number:'
-    b = gets.chomp
-    puts 'Enter the second number:'
-    c = gets.chomp
+    twonumbers
     d = b.to_i(2)-c.to_i(2)
     puts b + ' - ' + c + ' = ' + d.to_s(2) + '(' + d.to_i.to_s + ')'
-    puts 'Add or subtract?'
-    a = gets.chomp
+    choose
   else
-    puts 'Add or subtract?'
-    a = gets.chomp
+    choose
   end
 end

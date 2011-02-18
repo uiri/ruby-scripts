@@ -31,7 +31,7 @@ while i == 1 # change the value of i to break out
     y = gets.chomp # read input into y
   end
   if y.to_i != z.to_i # if the answer given was incorrect
-    puts "Sorry, the answer was " + z + ", you lose. Please play again." # tell the player they lost
+    puts "Sorry, the answer was " + z.to_s + ", you lose. Please play again." # tell the player they lost
     i = 0 # break out of the while loop
   end
 end

@@ -1,3 +1,4 @@
+#! /usr/bin/env ruby
 # -*- coding: utf-8 -*-
 # Multiplication Game GUI, play a multiplication game
 # Copyright 2011 Uiri Noyb
@@ -20,6 +21,16 @@ require 'gtk2'
 def delete # method used to make sure that the window closes properly
   Gtk.main_quit
   false
+end
+
+def nodotzero(x, y)
+  if x.to_f == x.to_i
+    x = x.to_i
+  end
+  
+  if y.to_f == y.to_i
+    y = y.to_i
+  end
 end
 
 # prepare the first window
@@ -54,11 +65,29 @@ boxes.each {|boxe| box1.pack_start(boxe, false, false, 0) }
 # method to start the game
 buttonitself.signal_connect( "clicked" ) do
   # put the gotten numbers into variables
-  $x = startentry.text
-  $y = fixedentry.text
+  x = startentry.text
+  y = fixedentry.text
+
+  if x.to_f == 0
+    x = ''
+  end
+
+  if y.to_f == 0
+    y = ''
+  end
+
+  if x.to_f == x.to_i
+    x = x.to_i
+  end
   
+  if y.to_f == y.to_i
+    y = y.to_i
+  end
+  
+  x = x.to_s.gsub(/[a-z]/, "").gsub(/[A-Z]/, "").gsub(/\./, "a").gsub(/\W/, "").gsub(/a/, ".").to_i
+
   # don't start the game unless neither values is blank
-  if $x != '' && $y != ''
+  unless x == '' || y == '' || x == 0 || y == 0
   
     # prep the game window
     window2 = Gtk::Window.new('Multiplication Game')
@@ -67,7 +96,7 @@ buttonitself.signal_connect( "clicked" ) do
     window2.add(box2)
   
     # create the label so the player can keep the old answer on screen
-    $label1 = Gtk::Label.new('Multiply ' + $x + ' by ' + $y)
+    label1 = Gtk::Label.new('Multiply ' + x.to_s + ' by ' + y.to_s)
     
     # GUI elements to get the next answer in the series
     answerbox = Gtk::HBox.new(false, 0)
@@ -80,7 +109,7 @@ buttonitself.signal_connect( "clicked" ) do
     loopbutton = Gtk::Button.new('Next Round')
 
     # shove all these GUI elements into the game window
-    widgets = [$label1, answerbox, loopbutton]
+    widgets = [label1, answerbox, loopbutton]
     widgets.each {|widget| box2.pack_start(widget, false, false, 0) }
   
     # method to check if the given answer is right
@@ -88,20 +117,29 @@ buttonitself.signal_connect( "clicked" ) do
       # make sure the answer isn't nothing
       if answerentry.text != ''
         # set $x and the label to contain the right answer
-        $x = $x.to_i * $y.to_i
-        $label1.set_text("Multiply " + $x.to_s + " by " + $y.to_s)
+        x = x.to_f * y.to_f
+
+        if x.to_f == x.to_i
+          x = x.to_i
+        end
+        
+        if y.to_f == y.to_i
+          y = y.to_i
+        end
+
+        label1.set_text("Multiply " + x.to_s + " by " + y.to_s)
 
         # what to do if the given answer is wrong
-        if answerentry.text != $x.to_s
+        if answerentry.text != x.to_s
           
           # kill the game window and prep a you lost window
           window2.destroy
           window3 = Gtk::Window.new('Sorry...')
           box3 = Gtk::VBox.new(false, 0)
           window3.add(box3)
-
+          
           # tell the player they lost and give options to stop playing or play again
-          sorrylabel = Gtk::Label.new('Sorry but that was an incorrect answer. Would you like to play again?')
+          sorrylabel = Gtk::Label.new('Sorry but the answer was ' + x.to_s + ' . Would you like to play again?')
           playagainbox = Gtk::HBox.new(false, 0)
           yesbutton = Gtk::Button.new('Yes')
           nobutton = Gtk::Button.new('No')

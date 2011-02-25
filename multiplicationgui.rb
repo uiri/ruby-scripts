@@ -1,4 +1,3 @@
-#! /usr/bin/env ruby
 # -*- coding: utf-8 -*-
 # Multiplication Game GUI, play a multiplication game
 # Copyright 2011 Uiri Noyb
@@ -21,16 +20,6 @@ require 'gtk2'
 def delete # method used to make sure that the window closes properly
   Gtk.main_quit
   false
-end
-
-def nodotzero(x, y)
-  if x.to_f == x.to_i
-    x = x.to_i
-  end
-  
-  if y.to_f == y.to_i
-    y = y.to_i
-  end
 end
 
 # prepare the first window
@@ -68,6 +57,9 @@ buttonitself.signal_connect( "clicked" ) do
   x = startentry.text
   y = fixedentry.text
 
+  x = x.to_s.gsub(/[a-z]/, "").gsub(/[A-Z]/, "").gsub(/\./, "a").gsub(/\W/, "").gsub(/a/, ".").to_f
+  y = y.to_s.gsub(/[a-z]/, "").gsub(/[A-Z]/, "").gsub(/\./, "a").gsub(/\W/, "").gsub(/a/, ".").to_f
+ 
   if x.to_f == 0
     x = ''
   end
@@ -83,8 +75,6 @@ buttonitself.signal_connect( "clicked" ) do
   if y.to_f == y.to_i
     y = y.to_i
   end
-  
-  x = x.to_s.gsub(/[a-z]/, "").gsub(/[A-Z]/, "").gsub(/\./, "a").gsub(/\W/, "").gsub(/a/, ".").to_i
 
   # don't start the game unless neither values is blank
   unless x == '' || y == '' || x == 0 || y == 0
@@ -122,11 +112,18 @@ buttonitself.signal_connect( "clicked" ) do
         if x.to_f == x.to_i
           x = x.to_i
         end
+
+        answerentry.set_text(answerentry.text.gsub(/[a-z]/, "").gsub(/[A-Z]/, "").gsub(/\./, "a").gsub(/\W/, "").gsub(/a/, ".").to_s)
         
-        if y.to_f == y.to_i
-          y = y.to_i
+        if answerentry.text.to_f == 0
+          answerentry.set_text('')
         end
 
+        if answerentry.text.to_f == answerentry.text.to_i
+          z = answerentry.text.to_i.to_s
+          answerentry.set_text(z)
+        end
+        
         label1.set_text("Multiply " + x.to_s + " by " + y.to_s)
 
         # what to do if the given answer is wrong

@@ -47,12 +47,11 @@ button1.signal_connect( "clicked" ) do
   a = (mark1.text.to_f/30)*0.4*100
   b = (mark2.text.to_f/50)*0.4*100
   c = (mark3.text.to_f/25)*0.2*100
-  d = a + b + c
+  d = a.to_i + b.to_i + c.to_i
   final = Gtk::Label.new(d.to_s)
   button2 = Gtk::Button.new("Done")
   box2.pack_start(final, true, true, 0)
   box2.pack_start(button2, true, true, 0)
-  window2.add(box2)
   window2.show_all
   button2.signal_connect( "clicked" ) do
     window2.destroy

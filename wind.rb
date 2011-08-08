@@ -1,3 +1,4 @@
+puts "This was an old waterloo computer science contest problem"
 h = gets.chomp
 m = gets.chomp
 t = 1

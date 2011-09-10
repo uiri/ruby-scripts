@@ -1,26 +1,29 @@
-a = 0
 x = [2,3]
 y = 4
-while a != 20002
-  w = 0
+bignum = y
+a = 0
+while y < 2000000
   x.each{|prime|
-    t = y.to_f / prime.to_f
-    u = y.to_i / prime.to_i
-    v = t - u.to_f
-    if v == 0
+    if prime > bignum
+      x.push(y)
       break
     else
-      w = w + 1
-      g = x.length - 1
-      if w == g
-        x.push(y)
-        a = a + 1
+      if y % prime == 0
+        break
+      else
+        bignum = y / prime
       end
     end
   }
   y = y + 1
-  if x.length > 20001
-    puts x[19999].to_s
-  #  a = 1
+  bignum = y
+  if x.length == 10001 && a == 0
+    puts x.last
+    a = 1
   end
 end
+sum = 0
+x.each{|prime|
+  sum = sum + prime
+}
+puts sum
